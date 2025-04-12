@@ -22,14 +22,14 @@
             </li>
         </xpath>
     </template>
-    <template
+      <template
         id="portal_my_home"
         name="Portal My Home : ticket entries"
-        inherit_id="portal.portal_my_home"
+        inherit_id="portal.portal_layout"
         priority="40"
         customize_show="True"
     >
-        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+        <xpath expr="//div[hasclass('o_portal_my_security')]" position="inside">
             <t t-call="portal.portal_docs_entry">
                 <t t-set="title">Tickets</t>
                 <t t-set="url" t-value="'/my/tickets'" />
@@ -45,7 +45,7 @@
                     name="create_new_ticket"
                     type="action"
                     class="btn btn-primary"
-                    style="float: right; margin-right: 0px; margin-bottom: 5px;"
+                    style="float: left; margin-right: 0px; margin-top: 10px;"
                 >New Ticket</button>
             </form>
         </xpath>
@@ -56,24 +56,26 @@
             <t t-call="portal.portal_searchbar">
                 <t t-set="title">Tickets</t>
             </t>
-            <form method="POST" t-attf-action="/new/ticket">
-                <button
-                    name="create_new_ticket"
-                    type="action"
-                    class="btn btn-primary"
-                    style="float: right; margin-right: 0px; margin-bottom: 5px;"
-                >New Ticket</button>
-                <input
-                    type="hidden"
-                    name="csrf_token"
-                    t-att-value="request.csrf_token()"
-                />
-            </form>
             <t t-if="not grouped_tickets">
                 <div class="alert alert-warning mt8" role="alert">
                     <p>No tickets found.</p>
                 </div>
             </t>
+            <div class="portal_my_tickets_btn d-flex justify-content-between mb-1">
+                <form method="POST" t-attf-action="/new/ticket">
+                    <button
+                        name="create_new_ticket"
+                        type="action"
+                        class="btn btn-primary"
+                        style="float: right; margin-right: 0px; margin-bottom: 5px;"
+                    >New Ticket</button>
+                    <input
+                        type="hidden"
+                        name="csrf_token"
+                        t-att-value="request.csrf_token()"
+                    />
+                </form>
+            </div>
             <t t-call="helpdesk_mgmt.portal_ticket_list" />
         </t>
     </template>
